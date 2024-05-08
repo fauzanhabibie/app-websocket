@@ -20,7 +20,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Daftar Barang</h5>
-                        <table id="daftar-barang" class="table">
+                        {{-- <table id="daftar-barang" class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -35,6 +35,18 @@
                                 </tr>
                                 @endforeach
                             
+                            </tbody>
+                        </table> --}}
+
+                        <table id="daftar-barang" class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nomor Urut</th>
+                                    <th scope="col">Nama Barang</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Daftar barang akan ditambahkan melalui JavaScript -->
                             </tbody>
                         </table>
                     </div>
@@ -54,25 +66,29 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/laravel-echo/1.11.3/echo.min.js"></script>
     <!-- Di bagian akhir HTML Anda -->
     <script>
-        fetch('/formbarang', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Pastikan token CSRF Anda disertakan jika diperlukan
-            },
-            body: JSON.stringify({ nama_barang: nama_barang })
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Tangkap respons JSON dan tampilkan pesan
-            alert(data.message); // Anda dapat menggunakan cara lain untuk menampilkan pesan
-        })
-        .catch(error => console.error('Error:', error));
-
-            </script>
+        window.Echo.private('barang')
+            .listen('BarangAdded', (event) => {
+                // Membuat elemen baru untuk baris tabel
+                const newRow = document.createElement('tr');
+    
+                // Menambahkan kolom nomor urut
+                const indexCell = document.createElement('td');
+                indexCell.textContent = event.index; // Misalnya, index barang
+                newRow.appendChild(indexCell);
+    
+                // Menambahkan kolom nama barang
+                const namaCell = document.createElement('td');
+                namaCell.textContent = event.nama_barang; // Nama barang baru
+                newRow.appendChild(namaCell);
+    
+                // Menambahkan baris baru ke tabel
+                document.getElementById('daftar-barang').getElementsByTagName('tbody')[0].appendChild(newRow);
+            });
+    </script>
+    
 
   </body>
 </html>
