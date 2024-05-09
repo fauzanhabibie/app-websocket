@@ -15,7 +15,7 @@ class BarangController extends Controller
     {
         $barang = Barang::all();
 
-       return view('barang.daftarbarang',['barang' => $barang]); 
+       return view('barang.daftarbarang',['barang' => $barang]);
     }
 
     /**
@@ -23,7 +23,7 @@ class BarangController extends Controller
      */
     public function create()
     {
-        return view('barang.form'); 
+        return view('barang.form');
     }
 
     /**
@@ -32,12 +32,12 @@ class BarangController extends Controller
     public function store(Request $request)
     {
 
-        
+
          $request->validate([
             'nama_barang' => 'required|string|max:255'
         ]);
 
-        // dd($validate); 
+        // dd($validate);
 
 
         // Simpan barang ke dalam penyimpanan (misalnya, database)
@@ -49,12 +49,10 @@ class BarangController extends Controller
         event(new BarangAdded($request->nama_barang));
 
         // Jika request adalah AJAX, kirim respon JSON
-        if ($request->ajax()) {
-            return response()->json(['message' => 'Barang berhasil ditambahkan']);
-        }
+        return response()->json(['success' => true]);
 
         // Jika bukan request AJAX, redirect kembali dengan pesan flash
-        return redirect()->back()->with('success', 'Barang berhasil ditambahkan');
+        // return redirect()->back()->with('success', 'Barang berhasil ditambahkan');
     }
     /**
      * Display the specified resource.

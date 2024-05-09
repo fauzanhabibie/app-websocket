@@ -27,12 +27,12 @@ Route::get('broadcast', function () {
 });
 
 Route::get('broadcastPrivate', function () {
-    $user = User::find(1); 
+    $user = User::find(1);
     broadcast(new PrivateTest($user));
     return 'Event Private daun sukses';
  });
 
- Route::get('/daftarbarang', [BarangController::class, 'index']); 
- Route::get('/formbarang', [BarangController::class, 'create']); 
+ Route::get('/get-barang', [BarangController::class, 'index']);
+ Route::get('/formbarang', [BarangController::class, 'create']);
  Route::post('/formbarang', [BarangController::class, 'store'])->name('store.barang');
 
