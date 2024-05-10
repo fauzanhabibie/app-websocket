@@ -21,38 +21,48 @@
                     <div class="card-body">
                         <h5 class="card-title">Daftar Barang</h5>
                         <!-- Daftar Barang -->
-                            <table id="daftar-barang" class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Nama Barang</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Baris-baris tabel akan ditambahkan melalui JavaScript -->
-                                </tbody>
-                            </table>
-
-
-
-
-
-                        {{-- <table id="daftar-barang" class="table">
+                        <table id="daftar-barang" class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Nomor Urut</th>
-                                    <th scope="col">Nama Barang</th>
+                                    <th>Nomor Urut</th>
+                                    <th>Nama Barang</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Daftar barang akan ditambahkan melalui JavaScript -->
+                                <!-- Daftar barang akan ditambahkan di sini -->
                             </tbody>
-                        </table> --}}
+                        </table>
+                        
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                        <script>
+                            $(document).ready(function() {
+                                // Fungsi untuk menambahkan data barang ke dalam tabel
+                                function tambahBarang(nomorUrut, namaBarang) {
+                                    $('#daftar-barang').append('<tr><td>' + nomorUrut + '</td><td>' + namaBarang + '</td></tr>');
+                                }
+                        
+                                // Menghubungkan ke WebSocket
+                                const socket = new WebSocket('http://127.0.0.1:8000/laravel-websockets'); // Ganti dengan URL WebSocket Anda
+                        
+                                // Mendengarkan pesan WebSocket
+                                socket.onmessage = function(event) {
+                                    const data = JSON.parse(event.data);
+                                    tambahBarang(data.nomor_urut, data.nama_barang);
+                                };
+                            });
+                        </script>
+
+
+
+
+
+                       
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 
 
     <!-- Optional JavaScript; choose one of the two! -->
@@ -65,7 +75,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
-
+    
 
 
   </body>
